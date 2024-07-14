@@ -2,7 +2,17 @@ package per.stock.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface BasicInfoMapper {
-    String select();
+
+    /**
+     * 查询所有股票代码
+     *
+     * @return List<String>
+     */
+    List<String> selectAll();
+
+
 }
