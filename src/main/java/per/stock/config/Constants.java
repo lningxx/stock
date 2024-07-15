@@ -1,4 +1,4 @@
-package per.stock;
+package per.stock.config;
 
 public class Constants {
 

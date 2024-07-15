@@ -1,12 +1,8 @@
 package per.stock.schedule;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import per.stock.component.KLineTask;
-import per.stock.mapper.BasicInfoMapper;
 
 import javax.annotation.Resource;
 
@@ -15,10 +11,6 @@ public class KLineBatchTask {
 
     @Resource
     KLineTask kLineTask;
-    @Resource
-    BasicInfoMapper basicInfoMapper;
-
-    Logger logger = LoggerFactory.getLogger(KLineBatchTask.class);
 
     /**
      * <h2>日k线拉取任务</h2>
@@ -28,7 +20,7 @@ public class KLineBatchTask {
      * @author lningxx
      * @since 0.1
      */
-    @Scheduled(fixedDelay = 5000)
+   // @Scheduled(fixedDelay = 5000)
 //    @Scheduled(cron = "0 0 17 W * ?")
     public void day(){
         kLineTask.execute("1","日k线拉取");
@@ -42,12 +34,10 @@ public class KLineBatchTask {
      * @author lningxx
      * @since 0.1
      */
+   // @Scheduled(fixedDelay = 500000)
     // @Scheduled(cron = "0 0 3 ? * MON")
     public void week(){
-        try{
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        kLineTask.execute("2","周k线拉取");
     }
 
     /**
@@ -58,11 +48,9 @@ public class KLineBatchTask {
      * @author lningxx
      * @since 0.1
      */
+    @Scheduled(fixedDelay = 500000)
     //    @Scheduled(cron = "0 0 5 1 * ?")
     public void month(){
-        try{
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        kLineTask.execute("3","月k线拉取");
     }
 }
