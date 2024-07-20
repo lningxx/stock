@@ -3,6 +3,7 @@ package per.stock.mapper;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface BasicInfoMapper {
@@ -12,7 +13,7 @@ public interface BasicInfoMapper {
      *
      * @return List<String>
      */
-    List<String> selectAll();
+    List<Map<String, String>> selectAll();
 
 
 }

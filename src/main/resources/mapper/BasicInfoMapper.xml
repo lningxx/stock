@@ -3,10 +3,10 @@
 
 <mapper namespace="per.stock.mapper.BasicInfoMapper">
 
-    <select id="selectAll" resultType="java.lang.String">
-        select a_code from basic_info
+    <select id="selectAll" resultType="java.util.Map">
+        select a_code code, stock_market stockMarket from basic_info
         union
-        select b_code from basic_info
+        select b_code code, stock_market stockMarket from basic_info
     </select>
 
 

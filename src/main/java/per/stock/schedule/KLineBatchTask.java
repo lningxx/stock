@@ -1,8 +1,10 @@
 package per.stock.schedule;
 
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import per.stock.component.KLineTask;
+import per.stock.enums.KLineEnum;
 
 import javax.annotation.Resource;
 
@@ -22,8 +24,9 @@ public class KLineBatchTask {
      */
    // @Scheduled(fixedDelay = 5000)
 //    @Scheduled(cron = "0 0 17 W * ?")
+    @DependsOn({"started"})
     public void day(){
-        kLineTask.execute("1","日k线拉取");
+        kLineTask.execute(KLineEnum.DAY_K);
     }
 
     /**
@@ -37,7 +40,7 @@ public class KLineBatchTask {
    // @Scheduled(fixedDelay = 500000)
     // @Scheduled(cron = "0 0 3 ? * MON")
     public void week(){
-        kLineTask.execute("2","周k线拉取");
+        kLineTask.execute(KLineEnum.WEEK_K);
     }
 
     /**
@@ -51,6 +54,6 @@ public class KLineBatchTask {
     @Scheduled(fixedDelay = 500000)
     //    @Scheduled(cron = "0 0 5 1 * ?")
     public void month(){
-        kLineTask.execute("3","月k线拉取");
+        kLineTask.execute(KLineEnum.MONTH_K);
     }
 }
