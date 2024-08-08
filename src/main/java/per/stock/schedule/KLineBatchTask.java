@@ -3,6 +3,7 @@ package per.stock.schedule;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import per.stock.cache.Cache;
 import per.stock.component.KLineTask;
 import per.stock.enums.KLineEnum;
 
@@ -13,6 +14,8 @@ public class KLineBatchTask {
 
     @Resource
     KLineTask kLineTask;
+    @Resource
+    Cache cache;
 
     /**
      * <h2>日k线拉取任务</h2>
@@ -56,4 +59,19 @@ public class KLineBatchTask {
     public void month(){
         kLineTask.execute(KLineEnum.MONTH_K);
     }
+
+    /**
+     * <h2>股票代码缓存信息刷新</h2>
+     * <p>刷新缓存信息</p>
+     * <p>每天凌晨零点 0 0 0 ? * MON</p>
+     *
+     * @author lningxx
+     * @since 0.1
+     */
+    // @Scheduled(fixedDelay = 500000)
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void refreshStockListCache(){
+        cache.loadStockList();
+    }
+
 }

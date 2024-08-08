@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="per.stock.mapper.KLineMapper">
+<mapper namespace="per.stock.mapper.StockKlineMapper">
 
     <select id="queryDayKLastDate" resultType="java.lang.String">
-        select max(trans_date) from k_line_day where code = #{stockCode}
+        select max(trans_date) from stock_day_kline_dtl where code = #{stockCode}
     </select>
 
     <select id="queryWeekKLastDate" resultType="java.lang.String">
-        select max(trans_date) from k_line_week where code = #{stockCode}
+        select max(trans_date) from stock_week_kline_dtl where code = #{stockCode}
     </select>
 
     <select id="queryMonthKLastDate" resultType="java.lang.String">
-        select max(trans_date) from k_line_month where code = #{stockCode}
+        select max(trans_date) from stock_month_kline_dtl where code = #{stockCode}
     </select>
 
 
     <insert id="batchAddDayK" parameterType="per.stock.bean.KLineBean">
-        insert into k_line_day(
+        insert into stock_day_kline_dtl(
             code, trans_date, open_price, close_price, high_price, 
             low_price, volume, amount, create_time, modify_time)
         values
@@ -30,7 +30,7 @@
     </insert>
 
     <insert id="batchAddWeekK" parameterType="per.stock.bean.KLineBean">
-        insert into k_line_week(
+        insert into stock_week_kline_dtl(
         code, trans_date, open_price, close_price, high_price,
         low_price, volume, amount, create_time, modify_time)
         values
@@ -43,7 +43,7 @@
     </insert>
 
     <insert id="batchAddMonthK" parameterType="per.stock.bean.KLineBean">
-        insert into k_line_month(
+        insert into stock_month_kline_dtl(
         code, trans_date, open_price, close_price, high_price,
         low_price, volume, amount, create_time, modify_time)
         values
@@ -56,18 +56,18 @@
     </insert>
 
     <select id="countByPrimaryKey" resultType="int">
-        select count(*) from k_line_day where code = #{code} and trans_date = #{transDate}
+        select count(*) from stock_day_kline_dtl where code = #{code} and trans_date = #{transDate}
     </select>
 
     <select id="queryDayKAllTransDate" resultType="java.lang.String">
-        select trans_date from k_line_day where code = #{code}
+        select trans_date from stock_day_kline_dtl where code = #{code}
     </select>
 
     <select id="queryWeekKAllTransDate" resultType="java.lang.String">
-        select trans_date from k_line_week where code = #{code}
+        select trans_date from stock_week_kline_dtl where code = #{code}
     </select>
 
     <select id="queryMonthKAllTransDate" resultType="java.lang.String">
-        select trans_date from k_line_month where code = #{code}
+        select trans_date from stock_month_kline_dtl where code = #{code}
     </select>
 </mapper>

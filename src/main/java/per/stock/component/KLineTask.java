@@ -1,25 +1,14 @@
 package per.stock.component;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import per.stock.cache.Cache;
-import per.stock.config.Constants;
 import per.stock.enums.KLineEnum;
 import per.stock.enums.MarketEnum;
-import per.stock.util.HttpUtils;
-import per.stock.bean.KLineBean;
-import per.stock.mapper.BasicInfoMapper;
-import per.stock.mapper.KLineMapper;
 
 import javax.annotation.Resource;
-import java.math.BigDecimal;
-import java.util.*;
+import java.util.Map;
 
 /**
  * k线数据拉取任务
@@ -29,8 +18,6 @@ import java.util.*;
  */
 @Component
 public class KLineTask {
-
-
 
     @Resource
     SHTransDataComponent shTransDataComponent;

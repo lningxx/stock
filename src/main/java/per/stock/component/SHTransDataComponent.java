@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import per.stock.bean.KLineBean;
 import per.stock.config.Constants;
-import per.stock.mapper.KLineMapper;
+import per.stock.mapper.StockKlineMapper;
 import per.stock.util.HttpUtils;
 
 import javax.annotation.Resource;
@@ -28,7 +28,7 @@ import java.util.Set;
 public class SHTransDataComponent {
 
     @Resource
-    KLineMapper kLineMapper;
+    StockKlineMapper kLineMapper;
 
     // 上海证券交易所接口地址
     @Value("${stock.sh.url}")
@@ -93,10 +93,10 @@ public class SHTransDataComponent {
                     int num = kLineMapper.batchAddDayK(addList);
                     // 数量匹配判断
                     if (num == addList.size())
-                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " k_line_day数据已插入...");
+                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " stock_day_kline_dtl数据已插入...");
                     else
                         throw new RuntimeException("股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() +
-                                "]k_line_day数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
+                                "]stock_day_kline_dtl数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
                     // 清空list
                     addList.clear();
                 }
@@ -162,10 +162,10 @@ public class SHTransDataComponent {
                     int num = kLineMapper.batchAddWeekK(addList);
                     // 数量匹配判断
                     if (num == addList.size())
-                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " k_line_week数据已插入...");
+                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " stock_week_kline_dtl数据已插入...");
                     else
                         throw new RuntimeException("股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() +
-                                "]k_line_week数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
+                                "]stock_week_kline_dtl数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
                     // 清空list
                     addList.clear();
                 }
@@ -231,10 +231,10 @@ public class SHTransDataComponent {
                     int num = kLineMapper.batchAddMonthK(addList);
                     // 数量匹配判断
                     if (num == addList.size())
-                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " k_line_month数据已插入...");
+                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " stock_month_kline_dtl数据已插入...");
                     else
                         throw new RuntimeException("股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() +
-                                "]k_line_month数据插入异常，已插条数:" + num + " 实际条数：" + addList.size());
+                                "]stock_month_kline_dtl数据插入异常，已插条数:" + num + " 实际条数：" + addList.size());
                     // 清空list
                     addList.clear();
                 }

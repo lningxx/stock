@@ -2,11 +2,12 @@ package per.stock.init;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import per.stock.cache.Cache;
-import per.stock.mapper.BasicInfoMapper;
+import per.stock.mapper.StockBasicInfMapper;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -20,33 +21,16 @@ import javax.annotation.Resource;
 @Component
 public class Started {
 
-    @Resource
-    BasicInfoMapper basicInfoMapper;
-
-
-    Logger logger = LoggerFactory.getLogger(Started.class);
-
+    @Autowired
+    Cache cache;
 
     /**
      * 加载缓存
      */
     @PostConstruct
     public void loadCache(){
-        logger.info("[缓存加载]开始加载缓存......");
-        try{
-            Cache.stockList = basicInfoMapper.selectAll();
-            logger.info("[缓存加载]stockList总条数：{}", Cache.stockList.size());
-        } catch (Exception e){
-            logger.error("[缓存加载]缓存加载异常", e);
-        }
-        logger.info("[缓存加载]缓存加载已完成......");
+        cache.loadStockList();
     }
 
-
-    @PostConstruct
-    public void justWait() throws InterruptedException {
-        Thread.sleep(10000);
-        logger.info("wait.......");
-    }
 }
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 @Mapper
-public interface BasicInfoMapper {
+public interface StockBasicInfMapper {
 
     /**
      * 查询所有股票代码

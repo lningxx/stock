@@ -6,7 +6,6 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import per.stock.bean.KLineBean;
 import per.stock.config.Constants;
@@ -21,20 +20,16 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 深圳证券交易所交易数据处理组件
- *
+ * <h2>股票交易信息拉取抽象类</h2>
+ * @author lningxx
+ * @since 0.0.1
  */
-@Component
-public class SZTransDataComponent {
+public abstract class AbstractTransDataComponent {
 
     @Resource
     StockKlineMapper kLineMapper;
 
-    // 上海证券交易所接口地址
-    @Value("${stock.sh.url}")
-    String stockShUrl;
-
-    Logger logger = LoggerFactory.getLogger(SHTransDataComponent.class);
+    Logger logger = LoggerFactory.getLogger(AbstractTransDataComponent.class);
 
     /**
      * 日k数据具体处理
@@ -54,12 +49,12 @@ public class SZTransDataComponent {
             else
                 lastDate = DateUtils.parseDate(lastDateStr, "yyyyMMdd");
 
-            // 系统时间 - 日k线表中最新日期
+            // 间隔毫秒数 = 系统时间 - 日k线表中最新日期
             long interval = System.currentTimeMillis() - lastDate.getTime();
             // 开始日坐标
             int start = -1 - (int)(interval/DateUtils.MILLIS_PER_DAY) - 1;
             // 查询url
-            String url = stockShUrl + "/v1/sh1/dayk/" + stockCode + "?begin=" + start + "&end=-1&period=day";
+            String url = getUrl();
 
             // 2. 请求数据
             String respStr = HttpUtils.get(url);
@@ -72,7 +67,7 @@ public class SZTransDataComponent {
             JSONArray jsonArray = jsonObject.getJSONArray("kline");
 
             // 批量插入List
-            List<KLineBean> addList = new LinkedList<>();
+            List<KLineBean> addList = handleRespData();
             // 日期集合
             Set<String> set = kLineMapper.queryDayKAllTransDate(stockCode); // TODO
             for (int i = 0; i < jsonArray.size(); i++) {

@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import per.stock.bean.KLineBean;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -12,7 +11,7 @@ import java.util.Set;
  * day/week/month 三合一Mapper
  */
 @Mapper
-public interface KLineMapper {
+public interface StockKlineMapper {
 
 
     /**
