@@ -45,8 +45,7 @@ public class SHTransDataComponent {
     public void day(String stockCode, String sign) {
         try{
             // 1. 组装请求url
-            // 日k线表中最新日期
-            Date lastDate;
+            Date lastDate;  // 日k线表中最新日期
             String lastDateStr = kLineMapper.queryDayKLastDate(stockCode);
             logger.info(sign + "日k线表中最新日期" + lastDateStr);
             if (lastDateStr == null)
@@ -67,14 +66,13 @@ public class SHTransDataComponent {
             // 3. 处理返回数据
             if (StringUtils.isEmpty(respStr))
                 return;
-            // 查询结果json转换
             JSONObject jsonObject = JSONObject.parseObject(respStr);
             JSONArray jsonArray = jsonObject.getJSONArray("kline");
 
-            // 批量插入List
+            // 4. 批量插入List
             List<KLineBean> addList = new LinkedList<>();
             // 日期集合
-            Set<String> set = kLineMapper.queryDayKAllTransDate(stockCode); // TODO
+            Set<String> set = kLineMapper.queryDayKAllTransDate(stockCode);
             for (int i = 0; i < jsonArray.size(); i++) {
 
                 JSONArray singleDayArray = (JSONArray)jsonArray.get(i);
@@ -93,10 +91,10 @@ public class SHTransDataComponent {
                     int num = kLineMapper.batchAddDayK(addList);
                     // 数量匹配判断
                     if (num == addList.size())
-                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " k_line_day数据已插入...");
+                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " stock_day_kline_dtl数据已插入...");
                     else
                         throw new RuntimeException("股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() +
-                                "]k_line_day数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
+                                "]stock_day_kline_dtl数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
                     // 清空list
                     addList.clear();
                 }
@@ -162,10 +160,10 @@ public class SHTransDataComponent {
                     int num = kLineMapper.batchAddWeekK(addList);
                     // 数量匹配判断
                     if (num == addList.size())
-                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " k_line_week数据已插入...");
+                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " stock_week_kline_dtl数据已插入...");
                     else
                         throw new RuntimeException("股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() +
-                                "]k_line_week数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
+                                "]stock_week_kline_dtl数据插入异常，已插条数:" + num + "实际条数：" + addList.size());
                     // 清空list
                     addList.clear();
                 }
@@ -209,7 +207,7 @@ public class SHTransDataComponent {
             JSONObject jsonObject = JSONObject.parseObject(respStr);
             JSONArray jsonArray = jsonObject.getJSONArray("kline");
 
-            // 批量插入List
+            // 4. 批量插入List
             List<KLineBean> addList = new LinkedList<>();
             // 日期集合
             Set<String> set = kLineMapper.queryMonthKAllTransDate(stockCode);
@@ -221,7 +219,7 @@ public class SHTransDataComponent {
                     continue;
 
                 // 组装月k线bean
-                KLineBean kLineBean = packageKLineBean(stockCode, jsonArray);
+                KLineBean kLineBean = packageKLineBean(stockCode, singleDayArray);
                 // 加入列表
                 addList.add(kLineBean);
 
@@ -231,10 +229,10 @@ public class SHTransDataComponent {
                     int num = kLineMapper.batchAddMonthK(addList);
                     // 数量匹配判断
                     if (num == addList.size())
-                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " k_line_month数据已插入...");
+                        logger.info(sign + "股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() + "]条数：" + num + " stock_month_kline_dtl数据已插入...");
                     else
                         throw new RuntimeException("股票代码[" + stockCode + "] 日期区间[" + addList.get(0).getTransDate() + "->" + addList.get(addList.size()-1).getTransDate() +
-                                "]k_line_month数据插入异常，已插条数:" + num + " 实际条数：" + addList.size());
+                                "]stock_month_kline_dtl数据插入异常，已插条数:" + num + " 实际条数：" + addList.size());
                     // 清空list
                     addList.clear();
                 }

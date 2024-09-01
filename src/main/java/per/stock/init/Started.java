@@ -2,11 +2,9 @@ package per.stock.init;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 import per.stock.cache.Cache;
-import per.stock.mapper.BasicInfoMapper;
+import per.stock.mapper.StockBasicInfoMapper;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -21,7 +19,7 @@ import javax.annotation.Resource;
 public class Started {
 
     @Resource
-    BasicInfoMapper basicInfoMapper;
+    StockBasicInfoMapper stockBasicInfoMapper;
 
 
     Logger logger = LoggerFactory.getLogger(Started.class);
@@ -34,7 +32,7 @@ public class Started {
     public void loadCache(){
         logger.info("[缓存加载]开始加载缓存......");
         try{
-            Cache.stockList = basicInfoMapper.selectAll();
+            Cache.stockList = stockBasicInfoMapper.selectAll();
             logger.info("[缓存加载]stockList总条数：{}", Cache.stockList.size());
         } catch (Exception e){
             logger.error("[缓存加载]缓存加载异常", e);
